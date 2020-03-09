@@ -12,12 +12,12 @@ class Api::StudentsController < ApplicationController
       last_name: params[:last_name],
       email: params[:email],
       phone_number: params[:phone_number],
-      bio: params[:bio],
-      linkedin: params[:linkedin],
-      twitter: params[:twitter],
-      website: params[:website],
-      resume: params[:resume],
-      github: params[:github],
+      short_bio: params[:short_bio],
+      linkedin_url: params[:linkedin_url],
+      twitter_handle: params[:twitter_handle],
+      website_url: params[:website_url],
+      online_resume_url: params[:online_resume_url],
+      github_url: params[:github_url],
       photo: params[:photo],
       password: params[:password],
       password_confirmation: params[:password_confirmation]
@@ -25,7 +25,7 @@ class Api::StudentsController < ApplicationController
     if @student.save
       render "show.json.jb"
     else
-      render json: {errors: @student.errors.full_messages}, status: :bad_request 
+      render json: {errors: @student.errors.full_messages}, status: 422 
     end 
     
   end
@@ -38,21 +38,26 @@ class Api::StudentsController < ApplicationController
   def update
     @student = Student.find_by(id: params[:id])
     if current_student.id == @student.id
+      if params[:password]
+        @student.password = params[:password]
+      end
       @student.first_name = params[:first_name] || @student.first_name
       @student.last_name = params[:last_name] || @student.last_name
       @student.email = params[:email] || @student.email
       @student.phone_number = params[:phone_number] || @student.phone_number
-      @student.bio = params[:bio] || @student.bio
-      @student.linkedin = params[:linkedin] || @student.linkedin
-      @student.twitter = params[:twitter] || @student.twitter
-      @student.website = params[:website] || @student.website
-      @student.resume = params[:resume] || @student.resume
-      @student.github = params[:github] || @student.github
+      @student.short_bio = params[:short_bio] || @student.short_bio
+      @student.linkedin_url = params[:linkedin_url] || @student.linkedin_url
+      @student.twitter_handle = params[:twitter_handle] || @student.twitter_handle
+      @student.website_url = params[:website_url] || @student.website_url
+      @student.online_resume_url = params[:online_resume_url] || @student.online_resume_url
+      @student.github_url = params[:github_url] || @student.github_url
       @student.photo = params[:photo] || @student.photo
 
-      @student.save
-      render "show.json.jb"
-
+      if @student.save
+        render "show.json.jb"
+      else
+        render json: {errors: @student.errors.full_messages}, status: 422
+      end
     else
       render json: {error: "Student information can only be edited by original student."}, status: :unauthorized
 
