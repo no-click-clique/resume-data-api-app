@@ -18,6 +18,9 @@ Rails.application.routes.draw do
 
     get "/skills" => "skills#index"
 
+    post "/student_skills" => "student_skills#create"
+    delete "/student_skills/:id" => "student_skills#destroy"
+
     post "/capstones" => "capstones#create"
     patch "/capstones/:id" => "capstones#update"
     delete "/capstones/:id" => "capstones#destroy"
