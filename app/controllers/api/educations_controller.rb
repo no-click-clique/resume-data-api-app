@@ -17,6 +17,11 @@ class Api::EducationsController < ApplicationController
     end
   end
 
+  def show
+    @education = Education.find(params[:id])
+    render "show.json.jb"
+  end
+
   def update
     @education = Education.find_by(id: params[:id])
     if current_student.id == @education.student_id

@@ -5,4 +5,9 @@ class Api::SkillsController < ApplicationController
     render "index.json.jb"
   end
 
+  def show
+    @skill = Skill.find(params[:id])
+    render "show.json.jb"
+  end
+
 end

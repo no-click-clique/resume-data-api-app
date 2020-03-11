@@ -10,6 +10,11 @@ class Api::StudentSkillsController < ApplicationController
     render 'show.json.jb' 
   end
 
+  def show
+    @student_skill = StudentSkill.find(params[:id])
+    render "show.json.jb"
+  end
+
   def destroy
     @student_skill = StudentSkill.find(params[:id])
     if @student_skill.student_id == current_student.id 

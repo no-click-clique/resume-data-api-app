@@ -17,6 +17,11 @@ class Api::CapstonesController < ApplicationController
     end  
   end
 
+  def show
+    @capstone = Capstone.find(params[:id])
+    render "show.json.jb"
+  end
+
   def update
     @capstone = Capstone.find_by(id: params[:id])
     if current_student.id == @capstone.student_id

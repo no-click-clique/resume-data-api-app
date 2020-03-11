@@ -17,6 +17,11 @@ class Api::ExperiencesController < ApplicationController
     end
   end
 
+  def show
+    @experience = Experience.find(params[:id])
+    render "show.json.jb"
+  end
+
   def update
     @experience = Experience.find_by(id: params[:id])
     if current_student.id == @experience.student_id
